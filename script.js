@@ -70,19 +70,25 @@ async function fetchCybersecurityNews() {
     newsList.innerHTML = "<li>Loading...</li>";
 
     try {
-        const response = await fetch("https://newsapi.org/v2/everything?q=cybersecurity&apiKey=c2616b9d6da94762906e67458e6579ad");
+        const response = await fetch(`https://cors-anywhere.herokuapp.com/https://newsapi.org/v2/everything?q=cybersecurity&apiKey=c2616b9d6da94762906e67458e6579ad`);
         const data = await response.json();
 
-        newsList.innerHTML = ""; // Clear loading message
-        data.articles.slice(0, 5).forEach(article => {
-            const listItem = document.createElement("li");
-            listItem.innerHTML = `<a href="${article.url}" target="_blank">${article.title}</a>`;
-            newsList.appendChild(listItem);
-        });
+        if (data.articles) {
+            newsList.innerHTML = "";
+            data.articles.slice(0, 5).forEach(article => {
+                const listItem = document.createElement("li");
+                listItem.innerHTML = `<a href="${article.url}" target="_blank">${article.title}</a>`;
+                newsList.appendChild(listItem);
+            });
+        } else {
+            newsList.innerHTML = "<li>No news found.</li>";
+        }
     } catch (error) {
-        newsList.innerHTML = "<li>Failed to load news. Check API key.</li>";
+        console.error("Error fetching news:", error);
+        newsList.innerHTML = "<li>Failed to load news. Try again later.</li>";
     }
 }
+
 
 // Automatically fetch news on page load
 fetchCybersecurityNews();
