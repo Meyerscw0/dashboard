@@ -11,7 +11,7 @@ function checkPassword() {
     if (/[0-9]/.test(password)) strength++;
     if (/[^A-Za-z0-9]/.test(password)) strength++;
 
-    const strengthLevels = ["Weak ❌", "Okay ⚠️", "Good ✅", "Strong 💪", "Very Strong 🔥"];
+    const strengthLevels = ["Weak ❌", "At risk ⚠️", "Good ✅", "Strong 💪", "Very Strong 🔥"];
     strengthText.innerHTML = `<strong>Strength:</strong> ${strengthLevels[strength] || "Very Weak ❌"}`;
 }
 
